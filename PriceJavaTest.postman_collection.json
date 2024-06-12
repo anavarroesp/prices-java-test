@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "faaebb18-14d1-44d6-833a-e34f187082ba",
+		"name": "PriceJavaTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3033932"
+	},
+	"item": [
+		{
+			"name": "GetPriceBadRequest",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/prices?brandId=272595b8-0a72-4782-83db-5d66bd293120&applicationDate=2020-06-14T00:00:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices"
+					],
+					"query": [
+						{
+							"key": "brandId",
+							"value": "272595b8-0a72-4782-83db-5d66bd293120"
+						},
+						{
+							"key": "applicationDate",
+							"value": "2020-06-14T00:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPriceEmptyResult NotFound",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/prices/brands/272595b8-0a72-4782-83db-5d66bd293128/products/9e059d8f-e5b9-4f69-9238-4688e1bed548/applicable-price?applicationDate=2020-06-14T00:00:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"prices",
+						"brands",
+						"272595b8-0a72-4782-83db-5d66bd293128",
+						"products",
+						"9e059d8f-e5b9-4f69-9238-4688e1bed548",
+						"applicable-price"
+					],
+					"query": [
+						{
+							"key": "applicationDate",
+							"value": "2020-06-14T00:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPriceOk",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/prices?brandId=272595b8-0a72-4782-83db-5d66bd293120&productId=9e059d8f-e5b9-4f69-9238-4688e1bed548&applicationDate=2020-06-14T00:00:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices"
+					],
+					"query": [
+						{
+							"key": "brandId",
+							"value": "272595b8-0a72-4782-83db-5d66bd293120"
+						},
+						{
+							"key": "productId",
+							"value": "9e059d8f-e5b9-4f69-9238-4688e1bed548"
+						},
+						{
+							"key": "applicationDate",
+							"value": "2020-06-14T00:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPrice malformed url",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/prices/y?brandId=272595b8-0a72-4782-83db-5d66bd293120&productId=9e059d8f-e5b9-4f69-9238-4688e1bed548&applicationDate=2020-06-14T00:00:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices",
+						"y"
+					],
+					"query": [
+						{
+							"key": "brandId",
+							"value": "272595b8-0a72-4782-83db-5d66bd293120"
+						},
+						{
+							"key": "productId",
+							"value": "9e059d8f-e5b9-4f69-9238-4688e1bed548"
+						},
+						{
+							"key": "applicationDate",
+							"value": "2020-06-14T00:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
