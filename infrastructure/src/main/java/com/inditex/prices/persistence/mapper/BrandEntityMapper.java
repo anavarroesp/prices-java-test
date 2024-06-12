@@ -11,5 +11,5 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BrandEntityMapper {
-    List<Brand> toDomain(List<BrandEntity> source);
+    Brand toDomain(BrandEntity source);
 }
