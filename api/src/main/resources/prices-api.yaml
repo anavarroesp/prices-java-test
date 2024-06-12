@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: Inditex Prices API
+  version: 1.0.0
+  
+tags:
+  - name: Prices
+    description: Prices API for Inditex java test
+    
+paths:
+  /prices:
+    get:
+      tags:
+        - Prices
+      operationId: getPrice
+      summary: Obtain te price detail filtered by brand, product and application date
+      parameters:
+        - name: brandId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: UUID
+        - name: productId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: UUID
+        - name: applicationDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Price detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    PriceDetail:
+      type: object
+      properties:
+        productId:
+          type: string
+          format: UUID
+        brandId:
+          type: string
+          format: UUID
+        priceList:
+          type: integer
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        price:
+          type: number
+          format: double
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+          maximum: 255
+        detail:
+          maximum: 255
+        instance:
+          type: string
+
+
