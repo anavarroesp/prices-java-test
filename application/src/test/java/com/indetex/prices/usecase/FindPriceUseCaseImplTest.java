@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -41,6 +42,19 @@ class FindPriceUseCaseImplTest {
         
         // Assert
         assertEquals(BigDecimal.valueOf(25.45), result.price());
+    }
+    
+    @Test
+    void findPriceMustReturnNullWhenNoPrices() {
+        // Arrange
+        when(this.pricePersistencePort.findPrice(any(), any(), any())).thenReturn(List.of());
+        
+        // Act
+        final var result = this.findPriceUseCase.findPrice(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"),
+                UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"));
+        
+        // Assert
+        assertNull(result);
     }
 
     private List<Price> generatePrices() {
