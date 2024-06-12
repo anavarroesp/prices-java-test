@@ -2,6 +2,7 @@ package com.inditex.prices.api.rest.handler;
 
 
 import com.inditex.prices.api.rest.model.ProblemDetail;
+import com.inditex.prices.domain.exception.ApplicablePriceNotFoundException;
 import jakarta.validation.ValidationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                             "Validation Error", 
                             ex.getMessage(), 
                             request.getDescription(false)));
+    }
+    
+    @ExceptionHandler({ApplicablePriceNotFoundException.class})
+    public ResponseEntity<Object> handleApplicablePriceNotFoundException(ApplicablePriceNotFoundException ex, WebRequest request) {
+        return createResponseEntity(
+                HttpStatus.NOT_FOUND.value(),
+                createProblemDetail(HttpStatus.NOT_FOUND.value(),
+                        "Applicable Price Not Found", 
+                        "no applicable price found for the given parameters", 
+                        request.getDescription(false)));
     }
     
 

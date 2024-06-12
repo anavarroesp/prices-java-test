@@ -3,6 +3,7 @@ package com.indetex.prices.usecase;
 import com.inditex.prices.domain.entity.Brand;
 import com.inditex.prices.domain.entity.Price;
 import com.inditex.prices.domain.entity.Product;
+import com.inditex.prices.domain.exception.ApplicablePriceNotFoundException;
 import com.inditex.prices.domain.ports.persistence.PricePersistencePort;
 import com.inditex.prices.usecase.FindPriceUseCaseImpl;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -45,16 +45,12 @@ class FindPriceUseCaseImplTest {
     }
     
     @Test
-    void findPriceMustReturnNullWhenNoPrices() {
+    void findPriceMustReturnApplicablePriceNotFoundException() {
         // Arrange
-        when(this.pricePersistencePort.findPrice(any(), any(), any())).thenReturn(List.of());
+        when(this.pricePersistencePort.findPrice(any(), any(), any())).thenThrow(new ApplicablePriceNotFoundException());
         
-        // Act
-        final var result = this.findPriceUseCase.findPrice(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"),
-                UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"));
-        
-        // Assert
-        assertNull(result);
+        // Act and Assert
+        assertThrows(ApplicablePriceNotFoundException.class, () -> this.findPriceUseCase.findPrice(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now()));
     }
 
     private List<Price> generatePrices() {

@@ -5,6 +5,7 @@ import com.inditex.prices.api.rest.model.PriceDetail;
 import com.inditex.prices.domain.entity.Brand;
 import com.inditex.prices.domain.entity.Price;
 import com.inditex.prices.domain.entity.Product;
+import com.inditex.prices.domain.exception.ApplicablePriceNotFoundException;
 import com.inditex.prices.domain.usecase.FindPriceUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -76,17 +77,12 @@ class PriceControllerTest {
     }
     
     @Test
-    void findPriceMustReturn200OkWhenNoPrices() {
+    void findPriceMustReturn404NotFound() {
         // Arrange
-        when(this.findPriceUseCase.findPrice(any(), any(), any())).thenReturn(null);
+        when(this.findPriceUseCase.findPrice(any(), any(), any())).thenThrow(new ApplicablePriceNotFoundException());
         
-        // Act
-        final var result = this.priceController.getPrice(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"),
-                UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"));
-        
-        // Assert
-        assertEquals(HttpStatusCode.valueOf(200), result.getStatusCode());
-        assertNull(result.getBody());
+        // Act and Assert
+        assertThrows(ApplicablePriceNotFoundException.class, () -> this.priceController.getPrice(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now()));
     }
     
     

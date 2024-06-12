@@ -2,6 +2,7 @@ package com.inditex.prices.usecase;
 
 
 import com.inditex.prices.domain.entity.Price;
+import com.inditex.prices.domain.exception.ApplicablePriceNotFoundException;
 import com.inditex.prices.domain.ports.persistence.PricePersistencePort;
 import com.inditex.prices.domain.usecase.FindPriceUseCase;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,6 @@ public class FindPriceUseCaseImpl implements FindPriceUseCase {
     @Override
     public Price findPrice(final UUID brandId, final UUID productId, final LocalDateTime date) {
         return this.pricePersistencePort.findPrice(brandId, productId, date).stream()
-                .max(Comparator.comparingInt(Price::priority)).orElse(null);
+                .max(Comparator.comparingInt(Price::priority)).orElseThrow(ApplicablePriceNotFoundException::new);
     }
 }
