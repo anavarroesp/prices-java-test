@@ -5,8 +5,8 @@ import java.util.UUID;
 
 import com.inditex.prices.domain.entity.Price;
 
-public interface FindPriceUseCase {
+public interface FindApplicablePriceUseCase {
   
-  Price findPrice(UUID brandId, UUID productId, LocalDateTime date);
+  Price findApplicablePrice(UUID brandId, UUID productId, LocalDateTime date);
   
 }

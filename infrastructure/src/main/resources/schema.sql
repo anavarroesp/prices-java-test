@@ -12,7 +12,7 @@ CREATE TABLE prices (
     brand_id UUID NOT NULL,
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
-    price_list INTEGER NOT NULL,
+    price_code INTEGER NOT NULL,
     product_id UUID NOT NULL,
     priority INTEGER NOT NULL,
     price DECIMAL(10, 2) NOT NULL,

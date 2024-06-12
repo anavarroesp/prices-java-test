@@ -8,6 +8,6 @@ import com.inditex.prices.domain.entity.Price;
 
 public interface PricePersistencePort {
 
-  List<Price> findPrice(UUID brandId, UUID productId, LocalDateTime date);
+  List<Price> findApplicablePrice(UUID brandId, UUID productId, LocalDateTime date);
 
 }

@@ -4,7 +4,7 @@ package com.inditex.prices.usecase;
 import com.inditex.prices.domain.entity.Price;
 import com.inditex.prices.domain.exception.ApplicablePriceNotFoundException;
 import com.inditex.prices.domain.ports.persistence.PricePersistencePort;
-import com.inditex.prices.domain.usecase.FindPriceUseCase;
+import com.inditex.prices.domain.usecase.FindApplicablePriceUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class FindPriceUseCaseImpl implements FindPriceUseCase {
+public class FindApplicablePriceUseCaseImpl implements FindApplicablePriceUseCase {
     
     private final PricePersistencePort pricePersistencePort;
 
     @Override
-    public Price findPrice(final UUID brandId, final UUID productId, final LocalDateTime date) {
-        return this.pricePersistencePort.findPrice(brandId, productId, date).stream()
+    public Price findApplicablePrice(final UUID brandId, final UUID productId, final LocalDateTime date) {
+        return this.pricePersistencePort.findApplicablePrice(brandId, productId, date).stream()
                 .max(Comparator.comparingInt(Price::priority)).orElseThrow(ApplicablePriceNotFoundException::new);
     }
 }

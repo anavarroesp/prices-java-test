@@ -3,7 +3,7 @@ package com.inditex.prices.api.rest.controller;
 import com.inditex.prices.api.rest.api.PricesApi;
 import com.inditex.prices.api.rest.mapper.PriceMapper;
 import com.inditex.prices.api.rest.model.PriceDetail;
-import com.inditex.prices.domain.usecase.FindPriceUseCase;
+import com.inditex.prices.domain.usecase.FindApplicablePriceUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,13 +15,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PriceController implements PricesApi {
     
-    private final FindPriceUseCase findPriceUseCase;
+    private final FindApplicablePriceUseCase findApplicablePriceUseCase;
     private final PriceMapper priceMapper;
     
     @Override
     public ResponseEntity<PriceDetail> getPrice(final UUID brandId, final UUID productId, final LocalDateTime applicationDate){
         return ResponseEntity.ok().body(this.priceMapper
-                .toPriceDetail(this.findPriceUseCase.findPrice(brandId, productId, applicationDate)));
+                .toPriceDetail(this.findApplicablePriceUseCase.findApplicablePrice(brandId, productId, applicationDate)));
     }
     
 }

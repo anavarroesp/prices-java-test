@@ -42,7 +42,7 @@ class PricePersistenceAdapterTest {
     private PricePersistenceAdapter pricePersistenceAdapter;
     
     @Test
-    void findPricesWhenExistMustReturnPrices() {
+    void findApplicablePricesWhenExistMustReturnPrices() {
         //Arrange
         final var brandId = UUID.randomUUID();
         final var productId = UUID.randomUUID();
@@ -62,7 +62,7 @@ class PricePersistenceAdapterTest {
         when(this.priceEntityMapper.toDomain(priceEntities)).thenReturn(prices);
         
         //Act
-        final var result = this.pricePersistenceAdapter.findPrice(brandId, productId, date);
+        final var result = this.pricePersistenceAdapter.findApplicablePrice(brandId, productId, date);
         
         //Assert
         assertNotNull(result);
@@ -71,7 +71,7 @@ class PricePersistenceAdapterTest {
     }
     
     @Test
-    void findPriceWhenNotExistMustReturnEmptyList() {
+    void findApplicablePriceWhenNotExistMustReturnEmptyList() {
         //Arrange
         final var brandId = UUID.randomUUID();
         final var productId = UUID.randomUUID();
@@ -88,7 +88,7 @@ class PricePersistenceAdapterTest {
         when(this.priceEntityRepository.findAll(spec)).thenReturn(List.of());
         
         //Act
-        final var result = this.pricePersistenceAdapter.findPrice(brandId, productId, date);
+        final var result = this.pricePersistenceAdapter.findApplicablePrice(brandId, productId, date);
         
         //Assert
         assertNotNull(result);
@@ -107,7 +107,7 @@ class PricePersistenceAdapterTest {
         final var price1 = Price.builder()
                 .product(product)
                 .brand(brand)
-                .priceList(1)
+                .priceCode(1)
                 .startDate(LocalDateTime.parse("2020-06-14T00:00:00"))
                 .endDate(LocalDateTime.parse("2020-12-31T23:59:59"))
                 .price(BigDecimal.valueOf(35.50))
@@ -117,7 +117,7 @@ class PricePersistenceAdapterTest {
         final var price2 = Price.builder()
                 .product(product)
                 .brand(brand)
-                .priceList(2)
+                .priceCode(2)
                 .startDate(LocalDateTime.parse("2020-06-14T15:00:00"))
                 .endDate(LocalDateTime.parse("2020-06-14T18:30:00"))
                 .price(BigDecimal.valueOf(25.45))
@@ -127,7 +127,7 @@ class PricePersistenceAdapterTest {
         final var price3 = Price.builder()
                 .product(product)
                 .brand(brand)
-                .priceList(3)
+                .priceCode(3)
                 .startDate(LocalDateTime.parse("2020-06-15T00:00:00"))
                 .endDate(LocalDateTime.parse("2020-06-15T11:00:00"))
                 .price(BigDecimal.valueOf(30.50))
@@ -137,7 +137,7 @@ class PricePersistenceAdapterTest {
         final var price4 = Price.builder()
                 .product(product)
                 .brand(brand)
-                .priceList(4)
+                .priceCode(4)
                 .startDate(LocalDateTime.parse("2020-06-15T16:00:00"))
                 .endDate(LocalDateTime.parse("2020-12-31T23:59:59"))
                 .price(BigDecimal.valueOf(38.95))
@@ -160,7 +160,7 @@ class PricePersistenceAdapterTest {
         price1.setBrand(brand);
         price1.setStartDate(LocalDateTime.parse("2020-06-14T00:00:00"));
         price1.setEndDate(LocalDateTime.parse("2020-12-31T23:59:59"));
-        price1.setPriceList(1);
+        price1.setPriceCode(1);
         price1.setProduct(product);
         price1.setPriority(0);
         price1.setPrice(BigDecimal.valueOf(35.50));
@@ -171,7 +171,7 @@ class PricePersistenceAdapterTest {
         price2.setBrand(brand);
         price2.setStartDate(LocalDateTime.parse("2020-06-14T15:00:00"));
         price2.setEndDate(LocalDateTime.parse("2020-06-14T18:30:00"));
-        price2.setPriceList(2);
+        price2.setPriceCode(2);
         price2.setProduct(product);
         price2.setPriority(1);
         price2.setPrice(BigDecimal.valueOf(25.45));
@@ -182,7 +182,7 @@ class PricePersistenceAdapterTest {
         price3.setBrand(brand);
         price3.setStartDate(LocalDateTime.parse("2020-06-15T00:00:00"));
         price3.setEndDate(LocalDateTime.parse("2020-06-15T11:00:00"));
-        price3.setPriceList(3);
+        price3.setPriceCode(3);
         price3.setProduct(product);
         price3.setPriority(1);
         price3.setPrice(BigDecimal.valueOf(30.50));
@@ -193,7 +193,7 @@ class PricePersistenceAdapterTest {
         price4.setBrand(brand);
         price4.setStartDate(LocalDateTime.parse("2020-06-15T16:00:00"));
         price4.setEndDate(LocalDateTime.parse("2020-12-31T23:59:59"));
-        price4.setPriceList(4);
+        price4.setPriceCode(4);
         price4.setProduct(product);
         price4.setPriority(1);
         price4.setPrice(BigDecimal.valueOf(38.95));

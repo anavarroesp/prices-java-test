@@ -23,7 +23,7 @@ public class PricePersistenceAdapter implements PricePersistencePort {
     private final PriceEntityMapper priceEntityMapper;
     
     @Override
-    public List<Price> findPrice(final UUID brandId, final UUID productId, final LocalDateTime date) {
+    public List<Price> findApplicablePrice(final UUID brandId, final UUID productId, final LocalDateTime date) {
 
         final Specification<PriceEntity> spec = Specification.where(this.priceEntitySpecification.hasBrand(brandId))
                 .and(this.priceEntitySpecification.hasProduct(productId))

@@ -28,8 +28,8 @@ public class PriceEntity implements Serializable {
     private LocalDateTime startDate;
     @Column(name = "start_date", nullable = false)
     private LocalDateTime endDate;
-    @Column(name = "price_list", nullable = false)
-    private Integer priceList;
+    @Column(name = "price_code", nullable = false)
+    private Integer priceCode;
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
