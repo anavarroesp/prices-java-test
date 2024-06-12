@@ -8,22 +8,25 @@ tags:
     description: Prices API for Inditex java test
     
 paths:
-  /prices:
+  /api/v1/prices/brands/{brandId}/products/{productId}/applicable-price:
     get:
       tags:
         - Prices
-      operationId: getPrice
-      summary: Obtain te price detail filtered by brand, product and application date
+      operationId: getApplicablePrice
+      summary: Obtain the applicable price detail filtered by brand, product and application date
       parameters:
         - name: brandId
-          in: query
+          in: path
           required: true
+          description: Brand identifier
           schema:
             type: string
             format: UUID
+          example: "1c3173e8-fd3e-4228-bfe1-98b86c3e75b1"
         - name: productId
-          in: query
+          in: path
           required: true
+          description: Product identifier
           schema:
             type: string
             format: UUID
@@ -35,7 +38,7 @@ paths:
             format: date-time
       responses:
         '200':
-          description: Price detail
+          description: Applicable price detail
           content:
             application/json:
               schema:
@@ -57,7 +60,7 @@ components:
         brandId:
           type: string
           format: UUID
-        priceList:
+        priceCode:
           type: integer
         startDate:
           type: string

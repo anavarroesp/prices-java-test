@@ -19,9 +19,10 @@ public class PriceController implements PricesApi {
     private final PriceMapper priceMapper;
     
     @Override
-    public ResponseEntity<PriceDetail> getPrice(final UUID brandId, final UUID productId, final LocalDateTime applicationDate){
+    public ResponseEntity<PriceDetail> getApplicablePrice(final UUID brandId, final UUID productId, final LocalDateTime applicationDate){
         return ResponseEntity.ok().body(this.priceMapper
                 .toPriceDetail(this.findApplicablePriceUseCase.findApplicablePrice(brandId, productId, applicationDate)));
     }
     
 }
+

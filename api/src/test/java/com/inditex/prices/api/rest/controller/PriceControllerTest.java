@@ -41,7 +41,7 @@ class PriceControllerTest {
         priceDetail.setPrice(25.45);
         priceDetail.setBrandId(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"));
         priceDetail.setProductId(UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"));
-        priceDetail.setPriceList(1);
+        priceDetail.setPriceCode(1);
         priceDetail.setStartDate(LocalDateTime.parse("2020-06-14T00:00:00"));
         priceDetail.setEndDate(LocalDateTime.parse("2020-12-31T23:59:59"));
 
@@ -67,7 +67,7 @@ class PriceControllerTest {
         when(this.priceMapper.toPriceDetail(any())).thenReturn(priceDetail);
         
         // Act
-        final var result = this.priceController.getPrice(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"),
+        final var result = this.priceController.getApplicablePrice(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"),
                 UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"));
         
         // Assert
@@ -81,7 +81,7 @@ class PriceControllerTest {
         when(this.findApplicablePriceUseCase.findApplicablePrice(any(), any(), any())).thenThrow(new ApplicablePriceNotFoundException());
         
         // Act and Assert
-        assertThrows(ApplicablePriceNotFoundException.class, () -> this.priceController.getPrice(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now()));
+        assertThrows(ApplicablePriceNotFoundException.class, () -> this.priceController.getApplicablePrice(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now()));
     }
     
     

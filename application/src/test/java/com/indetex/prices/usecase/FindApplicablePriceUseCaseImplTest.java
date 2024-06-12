@@ -31,7 +31,7 @@ class FindApplicablePriceUseCaseImplTest {
     private FindApplicablePriceUseCaseImpl findPriceUseCase;
     
     @Test
-    void findPriceMustReturnApplicablePriceWithMaxPriority() {
+    void findApplicablePriceMustReturnApplicablePriceWithMaxPriority() {
         // Arrange
         List<Price> prices = generatePrices();
         when(this.pricePersistencePort.findApplicablePrice(any(), any(), any())).thenReturn(prices);
@@ -45,7 +45,7 @@ class FindApplicablePriceUseCaseImplTest {
     }
     
     @Test
-    void findPriceMustReturnApplicableApplicablePriceNotFoundException() {
+    void findApplicablePriceMustReturnApplicableApplicablePriceNotFoundException() {
         // Arrange
         when(this.pricePersistencePort.findApplicablePrice(any(), any(), any())).thenThrow(new ApplicablePriceNotFoundException());
         
