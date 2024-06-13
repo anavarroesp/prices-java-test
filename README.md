@@ -39,7 +39,7 @@ Los componentes principales de la arquitectura del microservicio son los siguien
 1. **Clonar el repositorio**:
 
     ```sh
-    git clone <URL_DEL_REPOSITORIO>
+    git clone https://github.com/anavarroesp/prices-java-test.git
     cd prices
     ```
 
