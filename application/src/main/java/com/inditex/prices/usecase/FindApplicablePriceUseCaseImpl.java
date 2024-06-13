@@ -12,11 +12,15 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.UUID;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 @RequiredArgsConstructor
 public class FindApplicablePriceUseCaseImpl implements FindApplicablePriceUseCase {
     
     private final PricePersistencePort pricePersistencePort;
+
 
     @Override
     public Price findApplicablePrice(final UUID brandId, final UUID productId, final LocalDateTime date) {

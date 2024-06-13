@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * {@inheritDoc}
+ */
 @Component
 @AllArgsConstructor
 public class PricePersistenceAdapter implements PricePersistencePort {
