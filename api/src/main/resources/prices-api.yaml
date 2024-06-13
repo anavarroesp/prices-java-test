@@ -84,13 +84,6 @@ components:
           type: number
           format: double
           description: Price value
-      example:
-        productId: "1c3173e8-fd3e-4228-bfe1-98b86c3e75b1"
-        brandId: "1c3173e8-fd3e-4228-bfe1-98b86c3e75b1"
-        priceCode: 1
-        startDate: "2020-06-14T00:00:00Z"
-        endDate: "2020-12-31T23:59:59Z"
-        price: 35.50
       examples:
         - name: PriceDetailExample
           value:
