@@ -13,7 +13,7 @@ paths:
       tags:
         - Prices
       operationId: getApplicablePrice
-      summary: Obtain the applicable price detail filtered by brand, product and application date
+      summary: Obtain the applicable price detail for a product filtered by date
       parameters:
         - name: brandId
           in: path
@@ -30,12 +30,15 @@ paths:
           schema:
             type: string
             format: UUID
+          example: "1c3173e8-fd3e-4228-bfe1-98b86c3e75b1"
         - name: applicationDate
           in: query
           required: true
+          description: Date when the price is applied
           schema:
             type: string
             format: date-time
+          example: "2020-06-14T10:00:00Z"
       responses:
         '200':
           description: Applicable price detail
@@ -44,15 +47,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/PriceDetail'
         '400':
+          description: Bad request. One or more parameters has an invalid value.
           $ref: "#/components/responses/BadRequest"
         "404":
-            $ref: "#/components/responses/NotFound"
+          description: Resource not found or not records found
+          $ref: "#/components/responses/NotFound"
         "500":
             $ref: "#/components/responses/InternalServerError"
 components:
   schemas:
     PriceDetail:
       type: object
+      description: A Price Details object for a product
       properties:
         productId:
           type: string
@@ -71,18 +77,13 @@ components:
         price:
           type: number
           format: double
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        title:
-          type: string
-          maximum: 255
-        detail:
-          maximum: 255
-        instance:
-          type: string
+      example:
+        productId: "1c3173e8-fd3e-4228-bfe1-98b86c3e75b1"
+        brandId: "1c3173e8-fd3e-4228-bfe1-98b86c3e75b1"
+        priceCode: 1
+        startDate: "2020-06-14T00:00:00Z"
+        endDate: "2020-12-31T23:59:59Z"
+        price: 35.50
     ProblemDetail:
       description: A problemDetail Details object
       type: object
@@ -131,6 +132,16 @@ components:
             instance: /prices
     NotFound:
       description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+          example:
+            type: about:blank
+            title: Not Found
+            status: 404
+            detail: The requested resource could not be found
+            instance: /prices
     InternalServerError:
       description: Internal Server Error
       content:
