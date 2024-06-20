@@ -15,6 +15,6 @@ public interface FindApplicablePriceUseCase {
    * @param date the date and time at which the price is applicable
    * @return the applicable Price
    */
-  Price findApplicablePrice(UUID brandId, UUID productId, LocalDateTime date);
+  Price findApplicablePrice(UUID brandId, UUID productId, LocalDateTime date, Integer quantity);
   
 }

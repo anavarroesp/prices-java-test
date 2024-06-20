@@ -63,12 +63,12 @@ class PriceControllerTest {
                 .priority(0)
                 .build();
         
-        when(this.findApplicablePriceUseCase.findApplicablePrice(any(), any(), any())).thenReturn(price);
+        when(this.findApplicablePriceUseCase.findApplicablePrice(any(), any(), any(), any())).thenReturn(price);
         when(this.priceMapper.toPriceDetail(any())).thenReturn(priceDetail);
         
         // Act
         final var result = this.priceController.getApplicablePrice(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"),
-                UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"));
+                UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"), 1);
         
         // Assert
         assertEquals("272595b8-0a72-4782-83db-5d66bd293120", result.getBody().getBrandId().toString());
@@ -78,10 +78,10 @@ class PriceControllerTest {
     @Test
     void findPriceMustReturn404NotFound() {
         // Arrange
-        when(this.findApplicablePriceUseCase.findApplicablePrice(any(), any(), any())).thenThrow(new ApplicablePriceNotFoundException());
+        when(this.findApplicablePriceUseCase.findApplicablePrice(any(), any(), any(), any())).thenThrow(new ApplicablePriceNotFoundException());
         
         // Act and Assert
-        assertThrows(ApplicablePriceNotFoundException.class, () -> this.priceController.getApplicablePrice(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now()));
+        assertThrows(ApplicablePriceNotFoundException.class, () -> this.priceController.getApplicablePrice(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now(), 1));
     }
     
     

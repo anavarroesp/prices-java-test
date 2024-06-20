@@ -39,6 +39,14 @@ paths:
             type: string
             format: date-time
           example: "2020-06-14T10:00:00Z"
+        - name: quantity
+          in: query
+          required: false
+          description: Quantity of products
+          schema:
+            type: integer
+            format: int32
+          example: 1
       responses:
         '200':
           description: Applicable price detail

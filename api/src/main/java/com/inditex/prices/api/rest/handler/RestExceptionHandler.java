@@ -36,6 +36,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                         request.getDescription(false)));
     }
     
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
+        return createResponseEntity(
+                HttpStatus.BAD_REQUEST.value(),
+                createProblemDetail(HttpStatus.BAD_REQUEST.value(),
+                        "Illegal Argument", 
+                        ex.getMessage(), 
+                        request.getDescription(false)));
+    }
+    
 
     private ProblemDetail createProblemDetail(Integer status, String title, String detail, String instance) {
         ProblemDetail problemDetail = new ProblemDetail();

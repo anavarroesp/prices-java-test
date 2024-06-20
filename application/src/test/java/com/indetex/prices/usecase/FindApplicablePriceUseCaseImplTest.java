@@ -38,10 +38,25 @@ class FindApplicablePriceUseCaseImplTest {
         
         // Act
         final var result = this.findPriceUseCase.findApplicablePrice(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"),
-                UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"));
+                UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"), 1);
         
         // Assert
         assertEquals(BigDecimal.valueOf(25.45), result.price());
+    }
+
+    @Test
+    void findApplicablePriceWhitQuantityMustReturnApplicablePriceWithMaxPriority() {
+        // Arrange
+        List<Price> prices = generatePrices();
+        when(this.pricePersistencePort.findApplicablePrice(any(), any(), any())).thenReturn(prices);
+
+        // Act
+        final var result = this.findPriceUseCase.findApplicablePrice(UUID.fromString("272595b8-0a72-4782-83db-5d66bd293120"),
+                UUID.fromString("9e059d8f-e5b9-4f69-9238-4688e1bed548"), LocalDateTime.parse("2020-06-14T10:00:00"), 10);
+
+        var expectedPrice = new BigDecimal("254.50");
+        // Assert
+        assertEquals(expectedPrice, result.price());
     }
     
     @Test
@@ -50,7 +65,7 @@ class FindApplicablePriceUseCaseImplTest {
         when(this.pricePersistencePort.findApplicablePrice(any(), any(), any())).thenThrow(new ApplicablePriceNotFoundException());
         
         // Act and Assert
-        assertThrows(ApplicablePriceNotFoundException.class, () -> this.findPriceUseCase.findApplicablePrice(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now()));
+        assertThrows(ApplicablePriceNotFoundException.class, () -> this.findPriceUseCase.findApplicablePrice(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now(), 1));
     }
 
     private List<Price> generatePrices() {
