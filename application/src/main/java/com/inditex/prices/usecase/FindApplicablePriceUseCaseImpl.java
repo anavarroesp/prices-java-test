@@ -24,7 +24,7 @@ public class FindApplicablePriceUseCaseImpl implements FindApplicablePriceUseCas
 
 
     @Override
-    public Price findApplicablePrice(final UUID brandId, final UUID productId, final LocalDateTime date, final Integer quantity) throws IllegalArgumentException {
+    public Price findApplicablePrice(final UUID brandId, final UUID productId, final LocalDateTime date, final Integer quantity){
         return this.pricePersistencePort.findApplicablePrice(brandId, productId, date).stream()
                 .map(price -> {
                     if (quantity == null) {
